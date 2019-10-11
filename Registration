@@ -1,0 +1,91 @@
+package Digitebl;
+
+import java.util.List;
+import java.util.Scanner;
+
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.FindBy;
+import org.openqa.selenium.support.PageFactory;
+
+public class Registration 
+{
+	@FindBy(xpath = "//input[@placeholder='Individual Name']")
+	WebElement name;
+	
+	@FindBy(xpath = "//input[@placeholder='Mobile Phone Number']")
+	WebElement phNo;
+	
+	@FindBy(xpath = "//input[@placeholder='PIN (6 digit)']")
+	WebElement pin;
+	
+	@FindBy(xpath = "//input[@placeholder='Confirm PIN (6 digit)']")
+	WebElement confirmpin;
+	
+	@FindBy(xpath = "//button[@class='m-auto text-center btn bg-brand btn-active text-white']")
+	WebElement button;
+	
+	@FindBy(xpath = "//div[@class='alert alert-danger text-center']//strong")
+	WebElement alreadyRegistered;
+	
+	@FindBy(xpath = "//div[@class='alert alert-danger']")
+	List<WebElement> empty;
+	
+	@FindBy(xpath = "//input[@id='otp']")
+	WebElement otp;
+	
+	@FindBy(xpath = "//button[@class='m-auto btn btn-active bg-brand text-white']")
+	WebElement validateotp;
+	
+	public Registration(WebDriver driver)
+	{
+		PageFactory.initElements(driver, this);
+	}
+	
+	public void SignUp(String individualName, String mobileNo, String pinNo, String confirmpinNo)
+	{
+		name.clear();
+		phNo.clear();
+		pin.clear();
+		confirmpin.clear();
+		name.sendKeys(individualName);
+		phNo.sendKeys(mobileNo);
+		pin.sendKeys(pinNo);
+		confirmpin.sendKeys(confirmpinNo);
+		button.click();
+	}
+	
+	public void emptyField()
+	{
+		for(int i = 0; i < empty.size(); i++)
+		{
+			String emptytxt = empty.get(i).getText();
+			System.out.println("Empty Field: "+emptytxt);
+		}
+	}
+	
+	public void alreadyRegisteredNo()
+	{
+		if(alreadyRegistered.isDisplayed())
+		{
+			System.out.println(alreadyRegistered.getText());
+		}
+		
+		
+	}
+	
+
+	public void otpValidate()
+	{
+		if(otp.isDisplayed())
+		{
+			System.out.println("Enter otp: ");
+			Scanner sc = new Scanner(System.in);
+			String otpvalue = sc.next();
+			otp.sendKeys(otpvalue);
+			validateotp.click();
+		}
+		
+	}
+
+}
