@@ -1,0 +1,34 @@
+package Digitebl;
+
+import java.util.concurrent.TimeUnit;
+
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.chrome.ChromeOptions;
+
+public class main_Login 
+{
+	public static void main(String[] args) throws InterruptedException
+	{
+		ChromeOptions options = new ChromeOptions();
+		options.addArguments("--disable-notifications");
+		
+		System.setProperty("webdriver.chrome.driver", "./driver/chromedriver.exe");
+		WebDriver driver = new ChromeDriver();
+		
+		driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS); 
+
+		driver.get("https://test.digitebl.com");
+		
+		driver.findElement(By.xpath("//a[contains(text(),'LOGIN')]")).click();
+		
+		Login login = new Login(driver);
+		login.loginPage("9654248832", "123456");
+		login.invalidCredential();
+		Thread.sleep(5000);
+		login.loginPage("9654248831", "123456");
+		login.invalidCredential();
+	}
+
+}
