@@ -1,0 +1,44 @@
+package Digitebl;
+
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.FindBy;
+import org.openqa.selenium.support.PageFactory;
+
+public class Login 
+{
+	@FindBy(xpath = "//input[@placeholder='Mobile Number']")
+	WebElement phNo;
+	
+	@FindBy(xpath = "//input[@placeholder='PIN (6 digit)']")
+	WebElement pin;
+	
+	@FindBy(xpath = "//button[@class='m-auto text-center btn bg-brand text-white btn-active']")
+	WebElement button;
+	
+	@FindBy(xpath = "//label[@class='m-auto text-danger']//strong")
+	WebElement invalidCredentials;
+
+	
+	public Login(WebDriver driver)
+	{
+		PageFactory.initElements(driver, this);
+	}
+	
+	public void loginPage(String mobileNo, String pinNo)
+	{
+		phNo.clear();
+		pin.clear();
+		phNo.sendKeys(mobileNo);
+		pin.sendKeys(pinNo);
+		button.click();
+		
+		
+	}
+	
+	public void invalidCredential()
+	{
+		System.out.println(invalidCredentials.getText());
+	}
+
+}
